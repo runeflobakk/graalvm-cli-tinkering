@@ -34,6 +34,10 @@
                     <extensions>true</extensions>
                     <configuration>
                         <jvmArgs>--enable-preview</jvmArgs>
+                        <buildArgs>
+                            <arg>-Os</arg>
+                            <arg>--emit build-report</arg>
+                        </buildArgs>
                     </configuration>
                 </plugin>
             </plugins>
