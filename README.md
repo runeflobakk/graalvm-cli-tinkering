@@ -1,3 +1,66 @@
+
+
+
+# Task 3: Build an "executable JAR"
+
+Configure your Maven project to package your Java class in a JAR file, with a directive pointing to it as a "Main class", which makes the JAR file executable without needing to know what contained class is the entrypoint for execution.
+
+Maven expects to find Java sources in the folder `src/main/java`, so start with moving your Java source:
+
+```sh
+mkdir -p src/main/java
+mv <your-source-file> src/main/java
+```
+
+Configure compilation to target Java version 24 with enabled preview features (needed for simplified main classes). Add this properties to `pom.xml`
+
+```xml
+<properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.release>24</maven.compiler.release>
+    <maven.compiler.enablePreview>true</maven.compiler.enablePreview>
+</properties>
+```
+
+(the "sourceEncoding" property is a bonus to get rid of some warnings)
+
+
+
+
+Lastly the [maven-jar-plugin](https://maven.apache.org/plugins/maven-jar-plugin/) like this in your `pom.xml` file:
+
+```xml
+<build>
+    <pluginManagement>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>[your-source-file-basename]</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </pluginManagement>
+</build>
+```
+
+Running `mvn clean verify` should now produce the file `target/cli-1.0-SNAPSHOT.jar`, and to verify it works as it should, you can try to run it with
+
+```sh
+java --enable-preview -jar target/cli-1.0-SNAPSHOT.jar
+```
+
+
+Continue to [Task 4](https://github.com/runeflobakk/graalvm-cli-tinkering/tree/task4)
+
+
+
+
 # Task 2: Minimal Maven POM
 
 Verify that Maven uses your installed GraalVM JDK:
