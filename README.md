@@ -1,5 +1,39 @@
 
 
+# Task 4: Build a native executable
+
+Requiring the JDK to be installed, with the correct version, enabling preview features, are cumbersome. We will now instead create a native executable which can be run as any other command/program in your terminal.
+
+See if you are able to configure the GraalVM `native-maven-plugin` to produce a native image (or native executable) by following the Getting started guide at [https://graalvm.github.io/native-build-tools/latest/end-to-end-maven-guide.html](https://graalvm.github.io/native-build-tools/latest/end-to-end-maven-guide.html).
+
+Hints:
+Set up the base configuration in the existing `pluginManagement`, specifying the plugin version, setting it as `extensions=true` and enabling preview features is done with this:
+
+```xml
+<configuration>
+    <jvmArgs>--enable-preview</jvmArgs>
+</configuration>
+```
+
+Then set up a profile with id "native", configuring an execution of the `compile-no-fork` goal in your build.
+
+You are not required to configure your main-class, as the `native-maven-plugin` is capable of using the existing configuration of the JAR-plugin.
+
+You can try to build the native executable like this:
+
+```sh
+mvn verify -Pnative
+```
+
+And you should end up with the executable named only `cli` in the target-folder, and you can run it like this:
+
+```
+target/cli
+```
+
+
+
+
 
 # Task 3: Build an "executable JAR"
 
